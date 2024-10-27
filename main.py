@@ -1,3 +1,5 @@
+from typing import Optional
+
 from fastapi import Depends, Query, FastAPI, HTTPException
 from sqlalchemy.orm import Session
 
@@ -41,7 +43,7 @@ def create_author(author: schemas.AuthorCreate, db: Session = Depends(get_db)):
 
 @app.get("/books/", response_model=list[schemas.Book])
 def read_books_paginated(
-    author_id: int = None,
+    author_id: Optional[int] = None,
     page: int = Query(ge=0, default=0),
     size: int = Query(ge=1, le=100),
     db: Session = Depends(get_db),

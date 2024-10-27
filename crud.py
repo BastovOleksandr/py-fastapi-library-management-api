@@ -1,4 +1,5 @@
-from sqlalchemy import select
+from typing import Optional
+
 from sqlalchemy.orm import Session
 
 import schemas
@@ -7,17 +8,17 @@ from db import models
 
 def get_all_authors_paginated(db: Session, page: int = 0, size: int = 10):
     offset = page * size
-    selected_authors = select(models.Author).offset(offset).limit(size)
-    return db.execute(selected_authors).scalars().all()
+    queryset = db.query(models.Author).offset(offset).limit(size)
+    return queryset.all()
 
 
 def get_all_books_paginated(
-        db: Session, author_id: int, page: int = 0, size: int = 10
+        db: Session, author_id: Optional[int] = None, page: int = 0, size: int = 10
 ):
+    offset = page * size
     queryset = db.query(models.Book)
     if author_id is not None:
         queryset = queryset.filter(models.Book.author_id == author_id)
-    offset = page * size
     return queryset.offset(offset).limit(size).all()
 
 
