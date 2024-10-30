@@ -4,7 +4,7 @@ from sqlalchemy.orm import Session
 
 import schemas
 from db import models
-
+#
 
 def get_all_authors_paginated(db: Session, page: int = 0, size: int = 10):
     offset = page * size
