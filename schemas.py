@@ -22,7 +22,7 @@ class Author(AuthorBase):
 
 class BookBase(BaseModel):
     title: str
-    summary: str
+    summary: Optional[str] = None
     publication_date: date
 
 
